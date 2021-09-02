@@ -3,6 +3,7 @@ let listaBombe = []; //lista che contiene le bombe generate randomicamente
 let listaScelte = [];
 let punteggio = 0;
 
+let vivo = true;
 
 // const numMassimo = 25;  // sono commentate perchè tramite lo switch per i livelli ho bisogno di variabili con valori non definiti
 // const numBombe = 15; 
@@ -13,6 +14,7 @@ let punteggio = 0;
 let numMassimo;
 let numBombe;
 let livello;
+
 
 let livelloScelto = prompt("inserisci il livello di difficoltà: facile, medio, difficile")
 const listaLivelliPossibili = ["facile", "medio", "difficile"];
@@ -42,7 +44,7 @@ switch (livelloScelto) {
 }
 
 console.log("il livello di difficoltà scelto è: " + livelloScelto);
-livello = numMassimo -numBombe;
+livello = numMassimo - numBombe;
 
 // aggiungo bombe alla lista, finquando lunghezza lista minore di numBombe, se bomba generata non è gia inclusa allora la inserisco nell array
  
@@ -56,12 +58,13 @@ livello = numMassimo -numBombe;
 //  }
 
 
-getBombe(listaBombe , numBombe , numMassimo);
+listaBombe = getBombe(numBombe , numMassimo);
+
 
 console.log("stai attento a non scegliere queste bombe, se vuoi vivere" + " " + listaBombe)
 
 
-while (listaScelte.length < livello) {   // faccio fare 10 tentativi al massimo
+while (listaScelte.length < livello && vivo ) {   // faccio fare (livello.value) tentativi al massimo
     
     let numeroUtente = chiediNumero("Inserisci un numero");
 
@@ -69,23 +72,26 @@ while (listaScelte.length < livello) {   // faccio fare 10 tentativi al massimo
     //     numeroUtente = parseInt( prompt("hai inserito un numero non valido, inserisci un altro numero"));    
     // } 
 
-    if (listaScelte.includes(numeroUtente) == true) {
-        numeroUtente = chiediNumero("il numero è gia stato inserito, inserisci un altro numero");
-    
-    } else if (numeroUtente < 1 || numeroUtente > numMassimo){
-        numeroUtente = chiediNumero("hai inserito un numero non in range, inserisci tra 1 e " + numMassimo);
-    
+    if (!isNumeroValido(numeroUtente, numMassimo, 1 )) {
+        continue;
     }
-     else if (isNaN(numeroUtente)) {
-        numeroUtente = chiediNumero("hai inserito un numero non valido, inserisci un altro numero. is nan Terzo else");    
+
+    // if (listaScelte.includes(numeroUtente) == true) {
+    //     numeroUtente = chiediNumero("il numero è gia stato inserito, inserisci un altro numero");
     
-    } else {
+    // } else if (numeroUtente < 1 || numeroUtente > numMassimo){
+    //     numeroUtente = chiediNumero("hai inserito un numero non in range, inserisci tra 1 e " + numMassimo);
+    
+    // }
+    //  else if (isNaN(numeroUtente)) {
+    //     numeroUtente = chiediNumero("hai inserito un numero non valido, inserisci un altro numero. is nan Terzo else");    
+    
+    // } else {
 
     if (listaBombe.includes(numeroUtente) ) {
         alert("hai perso, il tuo punteggio è: " + listaScelte.length);
-       listaScelte.length = livello;
-      
-    
+        vivo = false;
+
     } else {
             listaScelte.push(numeroUtente);
             punteggio++;
@@ -101,10 +107,20 @@ while (listaScelte.length < livello) {   // faccio fare 10 tentativi al massimo
 function getNumRandom(min , max) {
     
     return Math.floor(Math.random() * (max - min + 1) + min);
-
 }
 
-function getBombe(array , numbombTemp,  numMassimoTemp) {
+function isNumeroValido(numeroUtenteTemporaneo, numeroMax, numeroMin) {
+   
+    if ( numeroUtenteTemporaneo < numeroMin || numeroUtenteTemporaneo > numeroMax  || isNaN(numeroUtenteTemporaneo) ){
+        return false;
+
+    } else
+        return true;
+ }
+
+function getBombe( numbombTemp,  numMassimoTemp) {
+
+    let array = [];
     while ( array.length < numbombTemp ) {
  
         let num = getNumRandom(1 , numMassimoTemp);
@@ -113,6 +129,7 @@ function getBombe(array , numbombTemp,  numMassimoTemp) {
             array.push(num);
         }
     }
+    return array;
 }
 
 function chiediNumero (stringa) {
