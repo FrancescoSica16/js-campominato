@@ -1,8 +1,8 @@
 /**
-     *  Il computer deve generare 16 numeri casuali tra 1 e 100.
+     *  Il computer deve generare 16(4) numeri casuali tra 1 e 100(25).
         I numeri non possono essere duplicati.
-        In seguito deve chiedere all’utente (100 - 16) volte di inserire un numero alla volta, 
-        sempre compreso tra 1 e 100. L’utente non può inserire più volte lo stesso numero.
+        In seguito deve chiedere all’utente (100(25) - 16(4)) volte di inserire un numero alla volta, 
+        sempre compreso tra 1 e 100(25). L’utente non può inserire più volte lo stesso numero.
         Se il numero è presente nella lista dei numeri generati, la partita termina, 
         altrimenti si continua chiedendo all’utente un altro numero.  La partita termina quando il giocatore 
         inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
