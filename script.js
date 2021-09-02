@@ -1,13 +1,48 @@
 let listaBombe = []; //lista che contiene le bombe generate randomicamente
 
 let listaScelte = [];
-
-const numMassimo = 25; 
-const numBombe = 15; 
-
 let punteggio = 0;
 
-const livello = numMassimo - numBombe;
+
+// const numMassimo = 25;  // sono commentate perchè tramite lo switch per i livelli ho bisogno di variabili con valori non definiti
+// const numBombe = 15; 
+// const livello = numMassimo - numBombe;
+
+
+// creazione livello di difficoltà
+let numMassimo;
+let numBombe;
+let livello;
+
+let livelloScelto = prompt("inserisci il livello di difficoltà: facile, medio, difficile")
+const listaLivelliPossibili = ["facile", "medio", "difficile"];
+
+while ( livelloScelto.length == 0 || !listaLivelliPossibili.includes(livelloScelto.trim().toLowerCase() )) {
+
+    livelloScelto = prompt("inserisci il livello di difficoltà: facile, medio, difficile");
+}
+
+switch (livelloScelto) {
+    case "facile":
+        numBombe = 2;
+        numMassimo = 10;
+        break;
+    case "medio":
+        numBombe = 3;
+        numMassimo = 10;
+        break;
+    case "difficile":
+        numBombe = 6;
+        numMassimo = 10;
+        break;        
+    default:
+        livelloScelto = "facile";
+        numBombe = 2;
+        numMassimo = 10;
+}
+
+console.log("il livello di difficoltà scelto è: " + livelloScelto);
+livello = numMassimo -numBombe;
 
 // aggiungo bombe alla lista, finquando lunghezza lista minore di numBombe, se bomba generata non è gia inclusa allora la inserisco nell array
  
@@ -19,9 +54,11 @@ const livello = numMassimo - numBombe;
 //          listaBombe.push(num);
 //      }
 //  }
+
+
 getBombe(listaBombe , numBombe , numMassimo);
 
-console.log( listaBombe)
+console.log("stai attento a non scegliere queste bombe, se vuoi vivere" + " " + listaBombe)
 
 
 while (listaScelte.length < livello) {   // faccio fare 10 tentativi al massimo
@@ -53,13 +90,13 @@ while (listaScelte.length < livello) {   // faccio fare 10 tentativi al massimo
             listaScelte.push(numeroUtente);
             punteggio++;
             if (listaScelte.length == livello) {
-                alert("complimenti hai vinto")
+                alert("complimenti hai vinto, il tuo punteggio è  " + punteggio )
             }
         }
     }
 }
- console.log(listaScelte);
- console.log(punteggio);
+ console.log("hai scelto questi valori " + listaScelte);
+ console.log("il tuo punteggio è " + punteggio);
 
 function getNumRandom(min , max) {
     
